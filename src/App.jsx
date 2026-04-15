@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const MAX_ENTRIES = 500;
-const LABEL_DISPLAY_LIMIT = 20;
-const SIWRSOA_LOGO_SRC = "/logo.png";
+const LABEL_DISPLAY_LIMIT = 60;
+const SIWRSOA_LOGO_SRC = "public/logo.png";
 const STORAGE_KEY = "siwrsoa_roleta_data";
 
 const COLOR_PALETTE = [
@@ -120,8 +120,10 @@ function describeSlice(cx, cy, r, startAngle, endAngle) {
 function getLabelSettings(count) {
   if (count <= 8) return { fontSize: 14, radiusFactor: 0.62, maxLength: 14 };
   if (count <= 12) return { fontSize: 11, radiusFactor: 0.7, maxLength: 10 };
-  if (count <= LABEL_DISPLAY_LIMIT) return { fontSize: 9, radiusFactor: 0.76, maxLength: 8 };
-  return { fontSize: 0, radiusFactor: 0.76, maxLength: 0 };
+  if (count <= 20) return { fontSize: 9, radiusFactor: 0.76, maxLength: 8 };
+  if (count <= 40) return { fontSize: 7, radiusFactor: 0.82, maxLength: 6 };
+  if (count <= 60) return { fontSize: 6, radiusFactor: 0.86, maxLength: 5 };
+  return { fontSize: 5, radiusFactor: 0.88, maxLength: 4 };
 }
 
 function getShortLabel(item, maxLength) {
@@ -141,7 +143,7 @@ function Wheel({ items, rotation }) {
   const center = size / 2;
   const sliceAngle = 360 / items.length;
   const labelSettings = getLabelSettings(items.length);
-  const showLabels = items.length <= LABEL_DISPLAY_LIMIT;
+  const showLabels = true;
   const strokeWidth = items.length > 80 ? 0.5 : items.length > 40 ? 1 : 2;
 
   return (
