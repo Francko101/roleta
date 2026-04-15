@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const MAX_ENTRIES = 500;
 const LABEL_DISPLAY_LIMIT = 60;
-const SIWRSOA_LOGO_SRC = "public/logo.png";
+const SIWRSOA_LOGO_SRC = "/logo.png";
 const STORAGE_KEY = "siwrsoa_roleta_data";
 
 const COLOR_PALETTE = [
@@ -174,6 +174,7 @@ function Wheel({ items, rotation }) {
             const endAngle = startAngle + sliceAngle;
             const midAngle = startAngle + sliceAngle / 2;
             const textPoint = polarToCartesian(center, center, radius * labelSettings.radiusFactor, midAngle);
+            const textRotation = midAngle > 180 ? midAngle + 90 : midAngle - 90;
 
             return (
               <g key={`${item}-${i}`}>
@@ -192,7 +193,7 @@ function Wheel({ items, rotation }) {
                     fontWeight="700"
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    transform={`rotate(${midAngle}, ${textPoint.x}, ${textPoint.y})`}
+                    transform={`rotate(${textRotation}, ${textPoint.x}, ${textPoint.y})`}
                   >
                     {getShortLabel(item, labelSettings.maxLength)}
                   </text>
